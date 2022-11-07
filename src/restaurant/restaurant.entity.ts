@@ -18,7 +18,7 @@ export class RestaurantEntity {
   @Column({ length: 20, nullable: false })
   restaurant_name: string;
 
-  @Column({ type: "text", nullable: false })
+  @Column({ type: "text" })
   restaurant_image: string;
 
   @Column({ length: 32, nullable: false })
@@ -81,7 +81,7 @@ export class RestaurantMenuEntity {
   @Column({ nullable: false })
   restaurant_menu_price: number;
 
-  @Column({ type: "text", nullable: false })
+  @Column({ type: "text" })
   restaurant_menu_image: string;
 
   @Column({ default: 0, nullable: false })

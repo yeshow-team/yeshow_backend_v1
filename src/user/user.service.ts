@@ -36,7 +36,7 @@ export class UserService {
     return this.userRepository.findOne({ where: { user_uuid } });
   }
 
-  async updateUser(user_uuid: string, user: UpdateUser): Promise<any> {
+  async updateUser(user_uuid: string, user: UpdateUser): Promise<UserEntity> {
     const userUpdate = this.userRepository.create({
       user_uuid,
       ...user,

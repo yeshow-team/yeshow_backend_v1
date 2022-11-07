@@ -1,4 +1,4 @@
-import { IsEmail } from "class-validator";
+import { IsEmail, IsPhoneNumber } from "class-validator";
 import bcrypt from "bcrypt";
 import {
   Column,
@@ -23,7 +23,7 @@ export class UserEntity {
   @IsEmail()
   user_email: string;
 
-  @Column({ length: 20, nullable: false, unique: true })
+  @Column({ length: 20, nullable: false })
   user_name: string;
 
   @Column({ length: 200, nullable: false, select: false })
@@ -35,16 +35,16 @@ export class UserEntity {
   @Column({ length: 20, nullable: false, unique: true })
   user_tell: string;
 
-  @Column({ type: "int", default: 0, nullable: false })
+  @Column({ default: 0, nullable: false })
   user_account_type: number;
 
-  @Column({ type: "int", default: 0, nullable: false, insert: false })
+  @Column({ default: 0, nullable: false, insert: false })
   user_role: number;
 
   @Column({ length: 200, nullable: true, select: false })
   user_refresh_token: string;
 
-  @CreateDateColumn({ insert: false, select: false })
+  @CreateDateColumn({ insert: false, update: false, select: false })
   user_created_date: Date;
 
   @UpdateDateColumn({ insert: false, select: false })

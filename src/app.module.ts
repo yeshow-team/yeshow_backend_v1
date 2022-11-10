@@ -4,6 +4,7 @@ import { DatabaseModule } from "./database.module";
 import { AuthModule } from "./auth/auth.module";
 import { UserModule } from "./user/user.module";
 import { RestaurantModule } from "./restaurant/restaurant.module";
+import { BookModule } from "./book/book.module";
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { RestaurantModule } from "./restaurant/restaurant.module";
     AuthModule,
     UserModule,
     RestaurantModule,
+    BookModule,
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: [`.env`],

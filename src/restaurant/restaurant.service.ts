@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { Repository, Like } from "typeorm";
 import { JwtService } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
 import {
@@ -165,6 +165,15 @@ export class RestaurantService {
     return this.restaurantLikeRepository.delete({
       user_uuid,
       restaurant_uuid,
+    });
+  }
+
+  async searchRestaurant(search: string): Promise<RestaurantEntity[]> {
+    return await this.restaurantRepository.find({
+      where: [
+        { restaurant_name: Like(`%${search}%`) },
+        { restaurant_category: Like(`%${search}%`) },
+      ],
     });
   }
 }

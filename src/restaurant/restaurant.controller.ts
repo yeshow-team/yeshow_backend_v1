@@ -166,4 +166,10 @@ export class RestaurantController {
       restaurant_uuid,
     );
   }
+
+  @Post("search")
+  @UseGuards(AccessGuard)
+  async searchRestaurant(@Body() body): Promise<RestaurantEntity[]> {
+    return this.restaurantService.searchRestaurant(body.search);
+  }
 }

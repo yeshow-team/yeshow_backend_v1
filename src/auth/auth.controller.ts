@@ -39,7 +39,14 @@ export class AuthController {
   @UseGuards(AuthGuard("local"))
   async login(@Req() req, @Res() res) {
     const { user } = req;
-    return await this.authService.getRefreshToken(user.user_id);
+    const refreshToken = await this.authService.getRefreshToken(user.user_id);
+    res.cookie("refreshToken", refreshToken, {
+      domain: this.config.get("SERVICE_DOMAIN"),
+      httpOnly: this.config.get("NODE_ENV") === "production",
+      secure: this.config.get("NODE_ENV") === "production",
+      maxAge: 60 * 60 * 24 * 7,
+    });
+    return res.redirect(this.config.get("FRONTEND_URL"));
   }
 
   @Get("google")

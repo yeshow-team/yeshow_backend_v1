@@ -35,9 +35,11 @@ export class AuthService {
 
   async validateUser(id: string, pw: string): Promise<UserEntity> {
     const uuid = await this.getUUIDById(id);
-    const user = await this.getUserPwByUUID(uuid);
-    if (user && (await bcrypt.compare(pw, user.user_pw))) {
-      return user;
+    if (uuid) {
+      const user = await this.getUserPwByUUID(uuid);
+      if (user && (await bcrypt.compare(pw, user.user_pw))) {
+        return user;
+      }
     }
     return null;
   }

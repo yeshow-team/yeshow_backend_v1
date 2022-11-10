@@ -8,6 +8,7 @@ import {
   Req,
   HttpCode,
   Delete,
+  Param,
 } from "@nestjs/common";
 import { RestaurantService } from "./restaurant.service";
 import {
@@ -41,20 +42,26 @@ export class RestaurantController {
     return this.restaurantService.createRestaurant(restaurant);
   }
 
-  @Post("detail")
+  @Get("detail/:restaurant_uuid")
   @UseGuards(AccessGuard)
-  async getRestaurantDetail(@Body() body): Promise<object> {
-    const restaurant = await this.restaurantService.getRestaurantDetail(
-      body.restaurant_uuid,
+  async getRestaurantDetail(
+    @Param("restaurant_uuid") restaurant_uuid,
+  ): Promise<object> {
+    const restaurant = await this.restaurantService.getRestaurant(
+      restaurant_uuid.restaurant_uuid,
+    );
+    const restaurant_detail = await this.restaurantService.getRestaurantDetail(
+      restaurant_uuid.restaurant_uuid,
     );
     const menu = await this.restaurantService.getRestaurantMenu(
-      body.restaurant_uuid,
+      restaurant_uuid.restaurant_uuid,
     );
     const review = await this.restaurantService.getRestaurantReview(
-      body.restaurant_uuid,
+      restaurant_uuid.restaurant_uuid,
     );
     return {
       restaurant,
+      restaurant_detail,
       menu,
       review,
     };

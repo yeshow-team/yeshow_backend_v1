@@ -19,17 +19,17 @@ export class UserEntity {
   @Column({ length: 20, nullable: false, unique: true })
   user_id: string;
 
-  @Column({ length: 254, nullable: false, unique: true })
+  @Column({ length: 254, nullable: true, unique: true })
   @IsEmail()
   user_email: string;
 
-  @Column({ length: 20, nullable: false })
+  @Column({ length: 20, nullable: true })
   user_name: string;
 
   @Column({ length: 200, nullable: false, select: false })
   user_pw: string;
 
-  @Column({ nullable: false })
+  @Column({ nullable: true })
   user_birth: Date;
 
   @Column({ length: 20, nullable: false, unique: true })

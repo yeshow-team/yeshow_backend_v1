@@ -60,6 +60,12 @@ export class RestaurantService {
     return this.restaurantRepository.save(restaurant);
   }
 
+  async getRestaurant(restaurant_uuid: string): Promise<RestaurantEntity> {
+    return await this.restaurantRepository.findOne({
+      where: { restaurant_uuid },
+    });
+  }
+
   async getRestaurantDetail(restaurant_uuid: string): Promise<object> {
     const [result, total] = await this.restaurantReviewRepository.findAndCount({
       where: { restaurant_uuid },

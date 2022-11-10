@@ -3,11 +3,11 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigService } from "@nestjs/config";
 import { JwtService } from "@nestjs/jwt";
 import { BookController } from "./book.controller";
-import { BookEntity } from "./book.entity";
+import { BookEntity, BookMenuEntity } from "./book.entity";
 import { BookService } from "./book.service";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([BookEntity])],
+  imports: [TypeOrmModule.forFeature([BookEntity, BookMenuEntity])],
   controllers: [BookController],
   providers: [BookService, ConfigService, JwtService],
 })

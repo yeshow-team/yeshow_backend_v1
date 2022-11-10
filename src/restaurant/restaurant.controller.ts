@@ -62,7 +62,7 @@ export class RestaurantController {
 
   @Post("detail/fetch")
   @UseGuards(AccessGuard)
-  async fetchDetail(@Body() body): Promise<RestaurantDetailEntity> {
+  async fetchDetail(@Body() body): Promise<object> {
     return this.restaurantService.getRestaurantDetail(body.restaurant_uuid);
   }
 

@@ -106,7 +106,10 @@ export class RestaurantReviewEntity {
   user_uuid: string;
 
   @Column({ type: "text", nullable: false })
-  restaurant_review: string;
+  restaurant_review_title: string;
+
+  @Column({ type: "text", nullable: false })
+  restaurant_review_detail: string;
 
   @Column({ default: 0, nullable: false })
   restaurant_review_rating: number;

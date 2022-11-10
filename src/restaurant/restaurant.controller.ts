@@ -42,7 +42,7 @@ export class RestaurantController {
     return this.restaurantService.createRestaurant(restaurant);
   }
 
-  @Get("detail/:restaurant_uuid")
+  @Get(":restaurant_uuid")
   @UseGuards(AccessGuard)
   async getRestaurantDetail(
     @Param("restaurant_uuid") restaurant_uuid,

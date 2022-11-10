@@ -115,12 +115,7 @@ export class AuthService {
       { user_uuid },
       { user_refresh_token: null as any },
     );
-    return {
-      domain: this.config.get("SERVICE_DOMAIN"),
-      path: "/",
-      httpOnly: true,
-      maxAge: 0,
-    };
+    return;
   }
 
   getToken(user_uuid: string, kind: string): string {

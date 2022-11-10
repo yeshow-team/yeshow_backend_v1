@@ -126,7 +126,7 @@ export class RestaurantReviewEntity {
 
 @Entity("restaurant_likes")
 export class RestaurantLikeEntity {
-  @Column({ length: 36, nullable: false })
+  @PrimaryColumn({ length: 36, nullable: false })
   restaurant_uuid: string;
 
   @Column({ length: 36, nullable: false })

@@ -37,7 +37,7 @@ export class AuthController {
   @Post("login")
   @HttpCode(200)
   @UseGuards(AuthGuard("local"))
-  async login(@Req() req, @Res() res) {
+  async login(@Req() req): Promise<object> {
     const { user } = req;
     const refreshToken = await this.authService.getRefreshToken(user.user_id);
     return { refreshToken: refreshToken };

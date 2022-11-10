@@ -123,3 +123,21 @@ export class RestaurantReviewEntity {
   @DeleteDateColumn({ insert: false, select: false })
   restaurant_review_deleted_at: Date;
 }
+
+@Entity("restaurant_likes")
+export class RestaurantLikeEntity {
+  @Column({ length: 36, nullable: false })
+  restaurant_uuid: string;
+
+  @Column({ length: 36, nullable: false })
+  user_uuid: string;
+
+  @CreateDateColumn({ insert: false, update: false, select: false })
+  restaurant_like_created_date: Date;
+
+  @UpdateDateColumn({ insert: false, select: false })
+  restaurant_like_updated_date: Date;
+
+  @DeleteDateColumn({ insert: false, select: false })
+  restaurant_like_deleted_at: Date;
+}

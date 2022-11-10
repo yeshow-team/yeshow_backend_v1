@@ -47,7 +47,7 @@ export class AuthService {
       where: { user_id },
       select: ["user_uuid"],
     });
-    return user.user_uuid;
+    return user?.user_uuid;
   }
 
   async getUserById(user_id: string): Promise<UserEntity> {

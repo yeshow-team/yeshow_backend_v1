@@ -7,6 +7,7 @@ import {
   Patch,
   Req,
   HttpCode,
+  Delete,
 } from "@nestjs/common";
 import { RestaurantService } from "./restaurant.service";
 import {
@@ -14,6 +15,7 @@ import {
   RestaurantDetailEntity,
   RestaurantMenuEntity,
   RestaurantReviewEntity,
+  RestaurantLikeEntity,
 } from "./restaurant.entity";
 import { AccessGuard } from "src/auth/access.guard";
 import { AdminGuard } from "src/auth/admin.guard";
@@ -92,7 +94,7 @@ export class RestaurantController {
     return this.restaurantService.getRestaurantReview(body.restaurant_uuid);
   }
 
-  @Post("review/create")
+  @Post("review")
   @UseGuards(AccessGuard)
   async createReview(
     @Body() restaurantReview: RestaurantReviewEntity,
@@ -101,6 +103,60 @@ export class RestaurantController {
     return this.restaurantService.createRestaurantReview(
       this.restaurantService.getUUIDFromReq(req),
       restaurantReview,
+    );
+  }
+
+  @Patch("review")
+  @UseGuards(AccessGuard)
+  async updateReview(
+    @Body() restaurantReview: RestaurantReviewEntity,
+    @Req() req,
+  ): Promise<RestaurantReviewEntity> {
+    return this.restaurantService.updateRestaurantReview(
+      this.restaurantService.getUUIDFromReq(req),
+      restaurantReview,
+    );
+  }
+
+  @Delete("review")
+  @UseGuards(AccessGuard)
+  async deleteReview(
+    @Body() restaurant_uuid: string,
+    @Req() req,
+  ): Promise<RestaurantReviewEntity> {
+    return this.restaurantService.deleteRestaurantReview(
+      this.restaurantService.getUUIDFromReq(req),
+      restaurant_uuid,
+    );
+  }
+
+  @Post("like/fetch")
+  @UseGuards(AccessGuard)
+  async getRestaurantLike(@Body() body): Promise<number> {
+    return this.restaurantService.getRestaurantLike(body.restaurant_uuid);
+  }
+
+  @Post("like")
+  @UseGuards(AccessGuard)
+  async createRestaurantLike(
+    @Body() restaurant_uuid: string,
+    @Req() req,
+  ): Promise<RestaurantLikeEntity> {
+    return this.restaurantService.createRestaurantLike(
+      this.restaurantService.getUUIDFromReq(req),
+      restaurant_uuid,
+    );
+  }
+
+  @Delete("like")
+  @UseGuards(AccessGuard)
+  async deleteRestaurantLike(
+    @Body() restaurant_uuid: string,
+    @Req() req,
+  ): Promise<RestaurantLikeEntity> {
+    return this.restaurantService.deleteRestaurantLike(
+      this.restaurantService.getUUIDFromReq(req),
+      restaurant_uuid,
     );
   }
 }

@@ -8,6 +8,7 @@ import {
   RestaurantDetailEntity,
   RestaurantMenuEntity,
   RestaurantReviewEntity,
+  RestaurantLikeEntity,
 } from "./restaurant.entity";
 
 @Injectable()
@@ -21,6 +22,8 @@ export class RestaurantService {
     private readonly restaurantMenuRepository: Repository<RestaurantMenuEntity>,
     @InjectRepository(RestaurantReviewEntity)
     private readonly restaurantReviewRepository: Repository<RestaurantReviewEntity>,
+    @InjectRepository(RestaurantLikeEntity)
+    private readonly restaurantLikeRepository: Repository<RestaurantLikeEntity>,
     private jwtService: JwtService,
     private readonly config: ConfigService,
   ) {}
@@ -87,6 +90,53 @@ export class RestaurantService {
     return this.restaurantReviewRepository.save({
       ...restaurantReview,
       user_uuid,
+    });
+  }
+
+  async updateRestaurantReview(
+    user_uuid: string,
+    restaurantReview: RestaurantReviewEntity,
+  ): Promise<RestaurantReviewEntity> {
+    return this.restaurantReviewRepository.save({
+      ...restaurantReview,
+      user_uuid,
+    });
+  }
+
+  async deleteRestaurantReview(
+    user_uuid: string,
+    restaurant_uuid: string,
+  ): Promise<any> {
+    return this.restaurantReviewRepository.delete({
+      user_uuid,
+      restaurant_uuid,
+    });
+  }
+
+  async getRestaurantLike(restaurant_uuid: string): Promise<number> {
+    const like = await this.restaurantLikeRepository.find({
+      where: { restaurant_uuid },
+    });
+    return like.length;
+  }
+
+  async createRestaurantLike(
+    user_uuid: string,
+    restaurant_uuid: string,
+  ): Promise<RestaurantLikeEntity> {
+    return this.restaurantLikeRepository.save({
+      user_uuid,
+      restaurant_uuid,
+    });
+  }
+
+  async deleteRestaurantLike(
+    user_uuid: string,
+    restaurant_uuid: string,
+  ): Promise<any> {
+    return this.restaurantLikeRepository.delete({
+      user_uuid,
+      restaurant_uuid,
     });
   }
 }

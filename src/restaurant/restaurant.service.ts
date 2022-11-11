@@ -74,6 +74,9 @@ export class RestaurantService {
 
   async deleteRestaurant(restaurant_uuid: string): Promise<any> {
     this.restaurantDetailRepository.delete({ restaurant_uuid });
+    this.restaurantMenuRepository.delete({ restaurant_uuid });
+    this.restaurantLikeRepository.delete({ restaurant_uuid });
+    this.restaurantReviewRepository.delete({ restaurant_uuid });
     return this.restaurantRepository.delete({ restaurant_uuid });
   }
 

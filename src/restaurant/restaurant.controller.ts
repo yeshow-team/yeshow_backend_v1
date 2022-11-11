@@ -30,7 +30,7 @@ export class RestaurantController {
 
   @Get()
   @UseGuards(AccessGuard)
-  async getHello(): Promise<RestaurantEntity[]> {
+  async findAll(): Promise<RestaurantEntity[]> {
     return this.restaurantService.findAll();
   }
 
@@ -67,13 +67,13 @@ export class RestaurantController {
     };
   }
 
-  @Post("detail/fetch")
+  @Get("detail/:restaurant_uuid")
   @UseGuards(AccessGuard)
-  async fetchDetail(@Body() body): Promise<object> {
-    return this.restaurantService.getRestaurantDetail(body.restaurant_uuid);
+  async fetchDetail(@Param("restaurant_uuid") restaurant_uuid): Promise<object> {
+    return this.restaurantService.getRestaurantDetail(restaurant_uuid);
   }
 
-  @Post("detail/create")
+  @Post("detail")
   @UseGuards(AdminGuard)
   async createDetail(
     @Body() restaurantDetail: RestaurantDetailEntity,
@@ -81,13 +81,13 @@ export class RestaurantController {
     return this.restaurantService.createRestaurantDetail(restaurantDetail);
   }
 
-  @Post("menu/fetch")
+  @Get("menu/:restaurant_uuid")
   @UseGuards(AccessGuard)
-  async fetchMenu(@Body() body): Promise<RestaurantMenuEntity[]> {
-    return this.restaurantService.getRestaurantMenu(body.restaurant_uuid);
+  async fetchMenu(@Param("restaurant_uuid") restaurant_uuid): Promise<RestaurantMenuEntity[]> {
+    return this.restaurantService.getRestaurantMenu(restaurant_uuid);
   }
 
-  @Post("menu/create")
+  @Post("menu")
   @UseGuards(AdminGuard)
   async createMenu(
     @Body() restaurantMenu: RestaurantMenuEntity,
@@ -95,10 +95,10 @@ export class RestaurantController {
     return this.restaurantService.createRestaurantMenu(restaurantMenu);
   }
 
-  @Post("review/fetch")
+  @Get("review/:restaurant_uuid")
   @UseGuards(AccessGuard)
-  async fetchReview(@Body() body): Promise<RestaurantReviewEntity[]> {
-    return this.restaurantService.getRestaurantReview(body.restaurant_uuid);
+  async fetchReview(@Param("restaurant_uuid") restaurant_uuid): Promise<RestaurantReviewEntity[]> {
+    return this.restaurantService.getRestaurantReview(restaurant_uuid);
   }
 
   @Post("review")
@@ -137,10 +137,10 @@ export class RestaurantController {
     );
   }
 
-  @Post("like/fetch")
+  @Post("like/:restaurant_uuid")
   @UseGuards(AccessGuard)
-  async getRestaurantLike(@Body() body): Promise<number> {
-    return this.restaurantService.getRestaurantLike(body.restaurant_uuid);
+  async getRestaurantLike(@Param("restaurant_uuid") restaurant_uuid): Promise<number> {
+    return this.restaurantService.getRestaurantLike(restaurant_uuid);
   }
 
   @Post("like")
@@ -168,6 +168,7 @@ export class RestaurantController {
   }
 
   @Post("search")
+  @HttpCode(200)
   @UseGuards(AccessGuard)
   async searchRestaurant(@Body() body): Promise<RestaurantEntity[]> {
     return this.restaurantService.searchRestaurant(body.search);

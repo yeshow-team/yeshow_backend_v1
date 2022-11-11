@@ -124,12 +124,12 @@ export class RestaurantController {
   @Delete("like")
   @UseGuards(AccessGuard)
   async deleteRestaurantLike(
-    @Body() restaurant_uuid: string,
+    @Body() body,
     @Req() req,
   ): Promise<RestaurantLikeEntity> {
     return this.restaurantService.deleteRestaurantLike(
       this.restaurantService.getUUIDFromReq(req),
-      restaurant_uuid,
+      body.restaurant_uuid,
     );
   }
 
@@ -184,12 +184,12 @@ export class RestaurantController {
   @Delete("review")
   @UseGuards(AccessGuard)
   async deleteReview(
-    @Body() restaurant_uuid: string,
+    @Body() body,
     @Req() req,
   ): Promise<RestaurantReviewEntity> {
     return this.restaurantService.deleteRestaurantReview(
       this.restaurantService.getUUIDFromReq(req),
-      restaurant_uuid,
+      body,
     );
   }
 

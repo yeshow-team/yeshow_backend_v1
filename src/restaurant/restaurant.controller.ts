@@ -81,8 +81,8 @@ export class RestaurantController {
 
   @Delete()
   @UseGuards(AdminGuard)
-  async deleteRestaurant(@Body() restaurant_uuid: string): Promise<any> {
-    return this.restaurantService.deleteRestaurant(restaurant_uuid);
+  async deleteRestaurant(@Body() body): Promise<any> {
+    return this.restaurantService.deleteRestaurant(body.restaurant_uuid);
   }
 
   @Get("detail/:restaurant_uuid")

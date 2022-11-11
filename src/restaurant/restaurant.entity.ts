@@ -69,7 +69,10 @@ export class RestaurantDetailEntity {
 
 @Entity("restaurant_menus")
 export class RestaurantMenuEntity {
-  @PrimaryColumn({ length: 36, nullable: false })
+  @PrimaryGeneratedColumn("increment")
+  menu_id: number;
+
+  @Column({ length: 36, nullable: false })
   restaurant_uuid: string;
 
   @Column({ type: "text", nullable: false })
@@ -99,7 +102,10 @@ export class RestaurantMenuEntity {
 
 @Entity("restaurant_reviews")
 export class RestaurantReviewEntity {
-  @PrimaryColumn({ length: 36, nullable: false })
+  @PrimaryGeneratedColumn("increment")
+  review_id: number;
+
+  @Column({ length: 36, nullable: false })
   restaurant_uuid: string;
 
   @Column({ length: 36, nullable: false })
@@ -126,7 +132,10 @@ export class RestaurantReviewEntity {
 
 @Entity("restaurant_likes")
 export class RestaurantLikeEntity {
-  @PrimaryColumn({ length: 36, nullable: false })
+  @PrimaryGeneratedColumn("increment")
+  like_id: number;
+
+  @Column({ length: 36, nullable: false })
   restaurant_uuid: string;
 
   @Column({ length: 36, nullable: false })

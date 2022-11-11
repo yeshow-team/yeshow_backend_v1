@@ -27,6 +27,9 @@ export class BookEntity {
   @Column({ nullable: false })
   book_people: number;
 
+  @Column({ nullable: false })
+  book_price: number;
+
   @CreateDateColumn({ insert: false, update: false })
   book_created_date: Date;
 

@@ -4,6 +4,7 @@ import { Repository } from "typeorm";
 import { JwtService } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
 import { BookEntity, BookMenuEntity } from "./book.entity";
+import { createBook } from "./book.interface";
 
 @Injectable()
 export class BookService {
@@ -34,12 +35,19 @@ export class BookService {
     });
   }
 
-  async createBook(user_uuid: string, book: BookEntity): Promise<BookEntity> {
+  async createBook(user_uuid: string, book: createBook): Promise<BookEntity> {
     const bookCreate = this.bookRepository.create({
       user_uuid,
-      ...book,
+      ...book.book,
     });
     await this.bookRepository.save(bookCreate);
+    book.book_menu.forEach(async (menu) => {
+      const bookMenuCreate = this.bookMenuRepository.create({
+        book_id: bookCreate.book_id,
+        ...menu,
+      });
+      await this.bookMenuRepository.save(bookMenuCreate);
+    });
     return this.getBook(user_uuid, bookCreate.book_id);
   }
 }

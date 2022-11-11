@@ -13,6 +13,7 @@ import { BookService } from "./book.service";
 import { BookEntity, BookMenuEntity } from "./book.entity";
 import { AccessGuard } from "src/auth/access.guard";
 import { AdminGuard } from "src/auth/admin.guard";
+import { createBook } from "./book.interface";
 
 @Controller({
   path: "user",
@@ -41,7 +42,7 @@ export class BookController {
 
   @Post()
   @UseGuards(AccessGuard)
-  async createBook(@Req() req, @Body() book: BookEntity): Promise<BookEntity> {
+  async createBook(@Req() req, @Body() book: createBook): Promise<BookEntity> {
     return this.bookService.createBook(
       this.bookService.getUUIDFromReq(req),
       book,

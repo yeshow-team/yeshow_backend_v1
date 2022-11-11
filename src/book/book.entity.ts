@@ -39,7 +39,10 @@ export class BookEntity {
 
 @Entity("book_menus")
 export class BookMenuEntity {
-  @PrimaryColumn({ nullable: false })
+  @PrimaryGeneratedColumn("increment")
+  book_menu_id: number;
+
+  @Column({ nullable: false })
   book_id: number;
 
   @Column({ nullable: false })

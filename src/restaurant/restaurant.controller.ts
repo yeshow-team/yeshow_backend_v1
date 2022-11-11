@@ -71,6 +71,22 @@ export class RestaurantController {
     };
   }
 
+  @Patch()
+  @UseGuards(AdminGuard)
+  async updateRestaurant(
+    @Body() restaurant: RestaurantEntity,
+  ): Promise<RestaurantEntity> {
+    return this.restaurantService.updateRestaurant(restaurant);
+  }
+
+  @Delete()
+  @UseGuards(AdminGuard)
+  async deleteRestaurant(
+    @Param("restaurant_uuid") restaurant_uuid: string,
+  ): Promise<any> {
+    return this.restaurantService.deleteRestaurant(restaurant_uuid);
+  }
+
   @Get("detail/:restaurant_uuid")
   @UseGuards(AccessGuard)
   async fetchDetail(

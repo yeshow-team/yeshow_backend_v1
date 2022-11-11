@@ -66,6 +66,17 @@ export class RestaurantService {
     });
   }
 
+  async updateRestaurant(
+    restaurant: RestaurantEntity,
+  ): Promise<RestaurantEntity> {
+    return this.restaurantRepository.save(restaurant);
+  }
+
+  async deleteRestaurant(restaurant_uuid: string): Promise<any> {
+    this.restaurantDetailRepository.delete({ restaurant_uuid });
+    return this.restaurantRepository.delete({ restaurant_uuid });
+  }
+
   async getRestaurantDetail(restaurant_uuid: string): Promise<object> {
     const [result, total] = await this.restaurantReviewRepository.findAndCount({
       where: { restaurant_uuid },

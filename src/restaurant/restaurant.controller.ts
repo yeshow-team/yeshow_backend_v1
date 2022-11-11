@@ -53,6 +53,9 @@ export class RestaurantController {
     const restaurant_detail = await this.restaurantService.getRestaurantDetail(
       restaurant_uuid.restaurant_uuid,
     );
+    const like = await this.restaurantService.getRestaurantLike(
+      restaurant_uuid.restaurant_uuid,
+    );
     const menu = await this.restaurantService.getRestaurantMenu(
       restaurant_uuid.restaurant_uuid,
     );
@@ -62,6 +65,7 @@ export class RestaurantController {
     return {
       restaurant,
       restaurant_detail,
+      like,
       menu,
       review,
     };
@@ -69,7 +73,9 @@ export class RestaurantController {
 
   @Get("detail/:restaurant_uuid")
   @UseGuards(AccessGuard)
-  async fetchDetail(@Param("restaurant_uuid") restaurant_uuid): Promise<object> {
+  async fetchDetail(
+    @Param("restaurant_uuid") restaurant_uuid,
+  ): Promise<object> {
     return this.restaurantService.getRestaurantDetail(restaurant_uuid);
   }
 
@@ -81,9 +87,43 @@ export class RestaurantController {
     return this.restaurantService.createRestaurantDetail(restaurantDetail);
   }
 
+  @Get("like/:restaurant_uuid")
+  @UseGuards(AccessGuard)
+  async getRestaurantLike(
+    @Param("restaurant_uuid") restaurant_uuid,
+  ): Promise<number> {
+    return this.restaurantService.getRestaurantLike(restaurant_uuid);
+  }
+
+  @Post("like")
+  @UseGuards(AccessGuard)
+  async createRestaurantLike(
+    @Body() restaurant_uuid: string,
+    @Req() req,
+  ): Promise<RestaurantLikeEntity> {
+    return this.restaurantService.createRestaurantLike(
+      this.restaurantService.getUUIDFromReq(req),
+      restaurant_uuid,
+    );
+  }
+
+  @Delete("like")
+  @UseGuards(AccessGuard)
+  async deleteRestaurantLike(
+    @Body() restaurant_uuid: string,
+    @Req() req,
+  ): Promise<RestaurantLikeEntity> {
+    return this.restaurantService.deleteRestaurantLike(
+      this.restaurantService.getUUIDFromReq(req),
+      restaurant_uuid,
+    );
+  }
+
   @Get("menu/:restaurant_uuid")
   @UseGuards(AccessGuard)
-  async fetchMenu(@Param("restaurant_uuid") restaurant_uuid): Promise<RestaurantMenuEntity[]> {
+  async fetchMenu(
+    @Param("restaurant_uuid") restaurant_uuid,
+  ): Promise<RestaurantMenuEntity[]> {
     return this.restaurantService.getRestaurantMenu(restaurant_uuid);
   }
 
@@ -97,7 +137,9 @@ export class RestaurantController {
 
   @Get("review/:restaurant_uuid")
   @UseGuards(AccessGuard)
-  async fetchReview(@Param("restaurant_uuid") restaurant_uuid): Promise<RestaurantReviewEntity[]> {
+  async fetchReview(
+    @Param("restaurant_uuid") restaurant_uuid,
+  ): Promise<RestaurantReviewEntity[]> {
     return this.restaurantService.getRestaurantReview(restaurant_uuid);
   }
 
@@ -132,36 +174,6 @@ export class RestaurantController {
     @Req() req,
   ): Promise<RestaurantReviewEntity> {
     return this.restaurantService.deleteRestaurantReview(
-      this.restaurantService.getUUIDFromReq(req),
-      restaurant_uuid,
-    );
-  }
-
-  @Post("like/:restaurant_uuid")
-  @UseGuards(AccessGuard)
-  async getRestaurantLike(@Param("restaurant_uuid") restaurant_uuid): Promise<number> {
-    return this.restaurantService.getRestaurantLike(restaurant_uuid);
-  }
-
-  @Post("like")
-  @UseGuards(AccessGuard)
-  async createRestaurantLike(
-    @Body() restaurant_uuid: string,
-    @Req() req,
-  ): Promise<RestaurantLikeEntity> {
-    return this.restaurantService.createRestaurantLike(
-      this.restaurantService.getUUIDFromReq(req),
-      restaurant_uuid,
-    );
-  }
-
-  @Delete("like")
-  @UseGuards(AccessGuard)
-  async deleteRestaurantLike(
-    @Body() restaurant_uuid: string,
-    @Req() req,
-  ): Promise<RestaurantLikeEntity> {
-    return this.restaurantService.deleteRestaurantLike(
       this.restaurantService.getUUIDFromReq(req),
       restaurant_uuid,
     );

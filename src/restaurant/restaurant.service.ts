@@ -43,7 +43,7 @@ export class RestaurantService {
 
   async findAll(): Promise<any> {
     const restaurants = await this.restaurantRepository.find();
-    const restaurantResult = [];
+    let restaurantResult = [];
     restaurants.forEach(async (restaurant) => {
       const [result, total] =
         await this.restaurantReviewRepository.findAndCount({
@@ -126,7 +126,10 @@ export class RestaurantService {
     return this.restaurantMenuRepository.save(restaurantMenu);
   }
 
-  async getRestaurantReview(restaurant_uuid: string, user_uuid: string): Promise<any> {
+  async getRestaurantReview(
+    restaurant_uuid: string,
+    user_uuid: string,
+  ): Promise<any> {
     const reviews = await this.restaurantReviewRepository.find({
       where: { restaurant_uuid },
     });

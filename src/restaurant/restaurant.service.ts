@@ -94,9 +94,9 @@ export class RestaurantService {
       0,
     );
     return {
-      ...this.restaurantDetailRepository.findOne({
+      ...(await this.restaurantDetailRepository.findOne({
         where: { restaurant_uuid },
-      }),
+      })),
       rating: rating / total,
     };
   }
@@ -129,14 +129,13 @@ export class RestaurantService {
       where: { restaurant_uuid },
     });
     const reviewResult = [];
-    reviews.forEach(async (review) => {
+    for (const review of reviews) {
       const user = await this.userService.fetchUser(review.user_uuid);
       reviewResult.push({
         ...review,
-        user: user,
-        myReview: user.user_uuid === user_uuid,
+        myReview: review.user_uuid === user_uuid,
       });
-    });
+    }
     return reviewResult;
   }
 

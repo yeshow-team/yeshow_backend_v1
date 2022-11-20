@@ -151,7 +151,7 @@ export class RestaurantController {
   @UseGuards(AccessGuard)
   async fetchReview(
     @Param("restaurant_uuid") restaurant_uuid: string,
-  ): Promise<RestaurantReviewEntity[]> {
+  ): Promise<any> {
     return this.restaurantService.getRestaurantReview(restaurant_uuid);
   }
 

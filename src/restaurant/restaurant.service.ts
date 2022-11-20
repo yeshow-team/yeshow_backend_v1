@@ -10,6 +10,8 @@ import {
   RestaurantReviewEntity,
   RestaurantLikeEntity,
 } from "./restaurant.entity";
+import { UserEntity } from "src/user/user.entity";
+import { UserService } from "src/user/user.service";
 
 @Injectable()
 export class RestaurantService {
@@ -24,6 +26,8 @@ export class RestaurantService {
     private readonly restaurantReviewRepository: Repository<RestaurantReviewEntity>,
     @InjectRepository(RestaurantLikeEntity)
     private readonly restaurantLikeRepository: Repository<RestaurantLikeEntity>,
+    @InjectRepository(UserEntity)
+    private readonly userService: UserService,
     private jwtService: JwtService,
     private readonly config: ConfigService,
   ) {}
@@ -122,12 +126,18 @@ export class RestaurantService {
     return this.restaurantMenuRepository.save(restaurantMenu);
   }
 
-  async getRestaurantReview(
-    restaurant_uuid: string,
-  ): Promise<RestaurantReviewEntity[]> {
-    return await this.restaurantReviewRepository.find({
+  async getRestaurantReview(restaurant_uuid: string): Promise<any> {
+    const reviews = await this.restaurantReviewRepository.find({
       where: { restaurant_uuid },
     });
+    const reviewResult = [];
+    reviews.forEach(async (review) => {
+      reviewResult.push({
+        ...review,
+        user: await this.userService.fetchUser(review.user_uuid),
+      });
+    });
+    return reviewResult;
   }
 
   async createRestaurantReview(

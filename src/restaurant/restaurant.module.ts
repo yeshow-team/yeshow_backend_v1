@@ -11,6 +11,8 @@ import {
   RestaurantLikeEntity,
 } from "./restaurant.entity";
 import { RestaurantService } from "./restaurant.service";
+import { UserEntity } from "src/user/user.entity";
+import { UserService } from "src/user/user.service";
 
 @Module({
   imports: [
@@ -20,9 +22,10 @@ import { RestaurantService } from "./restaurant.service";
       RestaurantMenuEntity,
       RestaurantReviewEntity,
       RestaurantLikeEntity,
+      UserEntity,
     ]),
   ],
   controllers: [RestaurantController],
-  providers: [RestaurantService, ConfigService, JwtService],
+  providers: [RestaurantService, ConfigService, JwtService, UserService],
 })
 export class RestaurantModule {}

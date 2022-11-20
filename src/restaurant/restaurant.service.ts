@@ -128,18 +128,13 @@ export class RestaurantService {
     const reviews = await this.restaurantReviewRepository.find({
       where: { restaurant_uuid },
     });
-    const reviewResult = reviews.map(
-      async (review) =>
-        await this.userService.getUserByUUID(review.user_uuid).then((user) => ({
-          ...review,
-          user,
-        })),
-    );
-    return Promise.all(reviewResult).then((result) => ({
-      reviews: result,
-      isLiked: reviews.some((review) => review.user_uuid === user_uuid),
-    }));
-
+    const reviewResult = [];
+    for (const review of reviews) {
+      reviewResult.push({
+        ...review,
+        myReview: review.user_uuid === user_uuid,
+      });
+    }
     return reviewResult;
   }
 

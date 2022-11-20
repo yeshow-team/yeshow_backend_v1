@@ -43,6 +43,7 @@ export class RestaurantController {
   @Get(":restaurant_uuid")
   @UseGuards(AccessGuard)
   async getRestaurantDetail(
+    @Req() req,
     @Param("restaurant_uuid") restaurant_uuid: string,
   ): Promise<object> {
     const restaurant = await this.restaurantService.getRestaurant(
@@ -59,6 +60,7 @@ export class RestaurantController {
     );
     const review = await this.restaurantService.getRestaurantReview(
       restaurant_uuid,
+      this.restaurantService.getUUIDFromReq(req),
     );
     return {
       restaurant,
@@ -150,9 +152,13 @@ export class RestaurantController {
   @Get("review/:restaurant_uuid")
   @UseGuards(AccessGuard)
   async fetchReview(
+    @Req() req,
     @Param("restaurant_uuid") restaurant_uuid: string,
   ): Promise<any> {
-    return this.restaurantService.getRestaurantReview(restaurant_uuid);
+    return this.restaurantService.getRestaurantReview(
+      restaurant_uuid,
+      this.restaurantService.getUUIDFromReq(req),
+    );
   }
 
   @Post("review")

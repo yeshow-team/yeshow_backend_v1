@@ -126,15 +126,17 @@ export class RestaurantService {
     return this.restaurantMenuRepository.save(restaurantMenu);
   }
 
-  async getRestaurantReview(restaurant_uuid: string): Promise<any> {
+  async getRestaurantReview(restaurant_uuid: string, user_uuid: string): Promise<any> {
     const reviews = await this.restaurantReviewRepository.find({
       where: { restaurant_uuid },
     });
     const reviewResult = [];
     reviews.forEach(async (review) => {
+      const user = await this.userService.fetchUser(review.user_uuid);
       reviewResult.push({
         ...review,
-        user: await this.userService.fetchUser(review.user_uuid),
+        user: user,
+        myReview: user.user_uuid === user_uuid,
       });
     });
     return reviewResult;

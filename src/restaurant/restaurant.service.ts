@@ -160,6 +160,7 @@ export class RestaurantService {
       where: { restaurant_uuid: restaurantReview.restaurant_uuid },
     });
     restaurant.restaurant_rating = rating / total;
+    console.log(restaurant);
     await this.restaurantRepository.save(restaurant);
     return this.restaurantReviewRepository.save({
       ...restaurantReview,

@@ -156,11 +156,11 @@ export class RestaurantService {
       (acc, cur) => acc + cur.restaurant_review_rating,
       0,
     );
+    console.log(result);
     const restaurant = await this.restaurantRepository.findOne({
       where: { restaurant_uuid: restaurantReview.restaurant_uuid },
     });
     restaurant.restaurant_rating = rating / total;
-    console.log(restaurant);
     await this.restaurantRepository.save(restaurant);
     return this.restaurantReviewRepository.save({
       ...restaurantReview,

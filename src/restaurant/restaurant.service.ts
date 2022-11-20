@@ -161,6 +161,7 @@ export class RestaurantService {
     });
     restaurant.restaurant_rating = rating / total;
     if (restaurant.restaurant_rating === NaN) restaurant.restaurant_rating = 0;
+    console.log(restaurant);
     await this.restaurantRepository.save(restaurant);
     return this.restaurantReviewRepository.save({
       ...restaurantReview,

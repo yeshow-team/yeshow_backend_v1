@@ -160,6 +160,8 @@ export class RestaurantService {
       0,
     );
     restaurant.restaurant_rating = rating / total;
+    console.log(rating / total);
+    console.log(restaurant);
     await this.updateRestaurant(restaurant);
     return this.restaurantReviewRepository.save({
       ...restaurantReview,

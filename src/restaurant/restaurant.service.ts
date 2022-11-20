@@ -147,22 +147,21 @@ export class RestaurantService {
     user_uuid: string,
     restaurantReview: RestaurantReviewEntity,
   ): Promise<RestaurantReviewEntity> {
-    // restaurants entity에 rating update with NaN check
-    const restaurant = await this.getRestaurant(
-      restaurantReview.restaurant_uuid,
-    );
+    // restaurants entity에 rating update
     const [result, total] = await this.restaurantReviewRepository.findAndCount({
       where: { restaurant_uuid: restaurantReview.restaurant_uuid },
       select: ["restaurant_review_rating"],
     });
-    const rating = (await result).reduce(
+    const rating = result.reduce(
       (acc, cur) => acc + cur.restaurant_review_rating,
       0,
     );
-    restaurant.restaurant_rating = rating / total;
-    console.log(rating / total);
+    const restaurant = await this.restaurantRepository.findOne({
+      where: { restaurant_uuid: restaurantReview.restaurant_uuid },
+    });
+    restaurant.restaurant_rating = (rating ? rating : 0) / (total ? total : 1);
     console.log(restaurant);
-    await this.updateRestaurant(restaurant);
+    await this.restaurantRepository.save(restaurant);
     return this.restaurantReviewRepository.save({
       ...restaurantReview,
       user_uuid,
@@ -185,7 +184,7 @@ export class RestaurantService {
     const restaurant = await this.restaurantRepository.findOne({
       where: { restaurant_uuid: restaurantReview.restaurant_uuid },
     });
-    restaurant.restaurant_rating = rating / total;
+    restaurant.restaurant_rating = (rating ? rating : 0) / (total ? total : 1);
     await this.restaurantRepository.save(restaurant);
     return this.restaurantReviewRepository.save({
       ...restaurantReview,
@@ -209,7 +208,7 @@ export class RestaurantService {
     const restaurant = await this.restaurantRepository.findOne({
       where: { restaurant_uuid },
     });
-    restaurant.restaurant_rating = rating / total;
+    restaurant.restaurant_rating = (rating ? rating : 0) / (total ? total : 1);
     await this.restaurantRepository.save(restaurant);
     return this.restaurantReviewRepository.delete({
       user_uuid,

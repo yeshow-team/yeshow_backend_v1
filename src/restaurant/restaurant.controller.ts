@@ -115,6 +115,7 @@ export class RestaurantController {
     @Body() restaurant_uuid: string,
     @Req() req,
   ): Promise<RestaurantLikeEntity> {
+    console.log(restaurant_uuid);
     return this.restaurantService.createRestaurantLike(
       this.restaurantService.getUUIDFromReq(req),
       restaurant_uuid,

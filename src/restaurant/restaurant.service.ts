@@ -43,7 +43,6 @@ export class RestaurantService {
 
   async findAll(): Promise<any> {
     const restaurants = await this.restaurantRepository.find();
-    let restaurantResult = [];
     restaurants.forEach(async (restaurant) => {
       const [result, total] =
         await this.restaurantReviewRepository.findAndCount({
@@ -55,12 +54,8 @@ export class RestaurantService {
         0,
       );
       restaurant.restaurant_rating = rating / total;
-      const like = await this.restaurantLikeRepository.count({
-        where: { restaurant_uuid: restaurant.restaurant_uuid },
-      });
-      restaurantResult.push({ ...restaurant, restaurant_like: like });
     });
-    return restaurantResult;
+    return restaurants;
   }
 
   async createRestaurant(
@@ -186,6 +181,12 @@ export class RestaurantService {
     user_uuid: string,
     restaurant_uuid: string,
   ): Promise<RestaurantLikeEntity> {
+    // restaurants entity에 like +1
+    const restaurant = await this.restaurantRepository.findOne({
+      where: { restaurant_uuid },
+    });
+    restaurant.restaurant_like += 1;
+    await this.restaurantRepository.save(restaurant);
     return this.restaurantLikeRepository.save({
       user_uuid,
       restaurant_uuid,
@@ -196,6 +197,12 @@ export class RestaurantService {
     user_uuid: string,
     restaurant_uuid: string,
   ): Promise<any> {
+    // restaurants entity에 like -1
+    const restaurant = await this.restaurantRepository.findOne({
+      where: { restaurant_uuid },
+    });
+    restaurant.restaurant_like -= 1;
+    await this.restaurantRepository.save(restaurant);
     return this.restaurantLikeRepository.delete({
       user_uuid,
       restaurant_uuid,

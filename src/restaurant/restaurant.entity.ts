@@ -30,6 +30,9 @@ export class RestaurantEntity {
   @Column({ default: 0, nullable: false })
   restaurant_rating: number;
 
+  @Column({ default: 0, nullable: false })
+  restaurant_like: number;
+
   @CreateDateColumn({ insert: false, update: false, select: false })
   restaurant_created_date: Date;
 

@@ -159,9 +159,7 @@ export class RestaurantService {
     const restaurant = await this.restaurantRepository.findOne({
       where: { restaurant_uuid: restaurantReview.restaurant_uuid },
     });
-    restaurant.restaurant_rating = rating / total;
-    if (restaurant.restaurant_rating === NaN) restaurant.restaurant_rating = 0;
-    console.log(restaurant);
+    restaurant.restaurant_rating = (rating ? rating : 0) / (total ? total : 1);
     await this.restaurantRepository.save(restaurant);
     return this.restaurantReviewRepository.save({
       ...restaurantReview,

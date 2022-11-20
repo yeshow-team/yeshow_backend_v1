@@ -142,6 +142,20 @@ export class RestaurantService {
     user_uuid: string,
     restaurantReview: RestaurantReviewEntity,
   ): Promise<RestaurantReviewEntity> {
+    // restaurants entity에 rating update
+    const [result, total] = await this.restaurantReviewRepository.findAndCount({
+      where: { restaurant_uuid: restaurantReview.restaurant_uuid },
+      select: ["restaurant_review_rating"],
+    });
+    const rating = (await result).reduce(
+      (acc, cur) => acc + cur.restaurant_review_rating,
+      0,
+    );
+    const restaurant = await this.restaurantRepository.findOne({
+      where: { restaurant_uuid: restaurantReview.restaurant_uuid },
+    });
+    restaurant.restaurant_rating = rating / total;
+    await this.restaurantRepository.save(restaurant);
     return this.restaurantReviewRepository.save({
       ...restaurantReview,
       user_uuid,
@@ -152,6 +166,20 @@ export class RestaurantService {
     user_uuid: string,
     restaurantReview: RestaurantReviewEntity,
   ): Promise<RestaurantReviewEntity> {
+    // restaurants entity에 rating update
+    const [result, total] = await this.restaurantReviewRepository.findAndCount({
+      where: { restaurant_uuid: restaurantReview.restaurant_uuid },
+      select: ["restaurant_review_rating"],
+    });
+    const rating = (await result).reduce(
+      (acc, cur) => acc + cur.restaurant_review_rating,
+      0,
+    );
+    const restaurant = await this.restaurantRepository.findOne({
+      where: { restaurant_uuid: restaurantReview.restaurant_uuid },
+    });
+    restaurant.restaurant_rating = rating / total;
+    await this.restaurantRepository.save(restaurant);
     return this.restaurantReviewRepository.save({
       ...restaurantReview,
       user_uuid,
@@ -162,6 +190,20 @@ export class RestaurantService {
     user_uuid: string,
     restaurant_uuid: string,
   ): Promise<any> {
+    // restaurants entity에 rating update
+    const [result, total] = await this.restaurantReviewRepository.findAndCount({
+      where: { restaurant_uuid },
+      select: ["restaurant_review_rating"],
+    });
+    const rating = (await result).reduce(
+      (acc, cur) => acc + cur.restaurant_review_rating,
+      0,
+    );
+    const restaurant = await this.restaurantRepository.findOne({
+      where: { restaurant_uuid },
+    });
+    restaurant.restaurant_rating = rating / total;
+    await this.restaurantRepository.save(restaurant);
     return this.restaurantReviewRepository.delete({
       user_uuid,
       restaurant_uuid,

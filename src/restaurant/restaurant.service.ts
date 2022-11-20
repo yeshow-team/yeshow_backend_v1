@@ -147,20 +147,20 @@ export class RestaurantService {
     user_uuid: string,
     restaurantReview: RestaurantReviewEntity,
   ): Promise<RestaurantReviewEntity> {
-    // restaurants entity에 rating update
+    // restaurants entity에 rating update with NaN check
+    const restaurant = await this.getRestaurant(
+      restaurantReview.restaurant_uuid,
+    );
     const [result, total] = await this.restaurantReviewRepository.findAndCount({
       where: { restaurant_uuid: restaurantReview.restaurant_uuid },
       select: ["restaurant_review_rating"],
     });
-    const rating = result.reduce(
+    const rating = (await result).reduce(
       (acc, cur) => acc + cur.restaurant_review_rating,
       0,
     );
-    const restaurant = await this.restaurantRepository.findOne({
-      where: { restaurant_uuid: restaurantReview.restaurant_uuid },
-    });
-    restaurant.restaurant_rating = (rating ? rating : 0) / (total ? total : 1);
-    await this.restaurantRepository.save(restaurant);
+    restaurant.restaurant_rating = rating / total;
+    await this.updateRestaurant(restaurant);
     return this.restaurantReviewRepository.save({
       ...restaurantReview,
       user_uuid,
@@ -184,7 +184,6 @@ export class RestaurantService {
       where: { restaurant_uuid: restaurantReview.restaurant_uuid },
     });
     restaurant.restaurant_rating = rating / total;
-    if (restaurant.restaurant_rating === NaN) restaurant.restaurant_rating = 0;
     await this.restaurantRepository.save(restaurant);
     return this.restaurantReviewRepository.save({
       ...restaurantReview,
@@ -209,7 +208,6 @@ export class RestaurantService {
       where: { restaurant_uuid },
     });
     restaurant.restaurant_rating = rating / total;
-    if (restaurant.restaurant_rating === NaN) restaurant.restaurant_rating = 0;
     await this.restaurantRepository.save(restaurant);
     return this.restaurantReviewRepository.delete({
       user_uuid,

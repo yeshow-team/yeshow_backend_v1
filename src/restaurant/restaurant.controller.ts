@@ -36,9 +36,7 @@ export class RestaurantController {
 
   @Post()
   @UseGuards(AdminGuard)
-  async createRestaurant(
-    @Body() restaurant: RestaurantEntity,
-  ): Promise<RestaurantEntity> {
+  async createRestaurant(@Body() restaurant: any): Promise<any> {
     return this.restaurantService.createRestaurant(restaurant);
   }
 

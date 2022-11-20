@@ -230,7 +230,6 @@ export class RestaurantService {
     const restaurant = await this.restaurantRepository.findOne({
       where: { restaurant_uuid },
     });
-    console.log(restaurant);
     restaurant.restaurant_like += 1;
     await this.restaurantRepository.save(restaurant);
     return this.restaurantLikeRepository.save({

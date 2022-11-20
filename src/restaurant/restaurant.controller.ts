@@ -115,7 +115,6 @@ export class RestaurantController {
     @Body() body: any,
     @Req() req,
   ): Promise<RestaurantLikeEntity> {
-    console.log(body.restaurant_uuid);
     return this.restaurantService.createRestaurantLike(
       this.restaurantService.getUUIDFromReq(req),
       body.restaurant_uuid,
@@ -125,7 +124,7 @@ export class RestaurantController {
   @Delete("like")
   @UseGuards(AccessGuard)
   async deleteRestaurantLike(
-    @Body() body,
+    @Body() body: any,
     @Req() req,
   ): Promise<RestaurantLikeEntity> {
     return this.restaurantService.deleteRestaurantLike(
@@ -194,7 +193,7 @@ export class RestaurantController {
   ): Promise<RestaurantReviewEntity> {
     return this.restaurantService.deleteRestaurantReview(
       this.restaurantService.getUUIDFromReq(req),
-      body,
+      body.restaurant_uuid,
     );
   }
 

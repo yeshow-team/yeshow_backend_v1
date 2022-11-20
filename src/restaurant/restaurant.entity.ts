@@ -27,7 +27,12 @@ export class RestaurantEntity {
   @Column({ default: 0, nullable: false })
   restaurant_type: number;
 
-  @Column({ default: 0, nullable: false })
+  @Column("decimal", {
+    default: 0,
+    nullable: false,
+    precision: 38,
+    scale: 0,
+  })
   restaurant_rating: number;
 
   @Column({ default: 0, nullable: false })

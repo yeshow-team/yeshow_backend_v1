@@ -163,7 +163,7 @@ export class RestaurantService {
     const restaurant = await this.restaurantRepository.findOne({
       where: { restaurant_uuid: restaurantReview.restaurant_uuid },
     });
-    restaurant.restaurant_rating = (rating ? rating : 0) / (total ? total : 1);
+    restaurant.restaurant_rating = rating / total;
     await this.restaurantRepository.save(restaurant);
     return;
   }
@@ -173,6 +173,10 @@ export class RestaurantService {
     restaurantReview: RestaurantReviewEntity,
   ): Promise<RestaurantReviewEntity> {
     // restaurants entity에 rating update
+    await this.restaurantReviewRepository.save({
+      ...restaurantReview,
+      user_uuid,
+    });
     const [result, total] = await this.restaurantReviewRepository.findAndCount({
       where: { restaurant_uuid: restaurantReview.restaurant_uuid },
       select: ["restaurant_review_rating"],
@@ -184,12 +188,9 @@ export class RestaurantService {
     const restaurant = await this.restaurantRepository.findOne({
       where: { restaurant_uuid: restaurantReview.restaurant_uuid },
     });
-    restaurant.restaurant_rating = (rating ? rating : 0) / (total ? total : 1);
+    restaurant.restaurant_rating = rating / total;
     await this.restaurantRepository.save(restaurant);
-    return this.restaurantReviewRepository.save({
-      ...restaurantReview,
-      user_uuid,
-    });
+    return;
   }
 
   async deleteRestaurantReview(
@@ -197,6 +198,10 @@ export class RestaurantService {
     restaurant_uuid: string,
   ): Promise<any> {
     // restaurants entity에 rating update
+    await this.restaurantReviewRepository.delete({
+      user_uuid,
+      restaurant_uuid,
+    });
     const [result, total] = await this.restaurantReviewRepository.findAndCount({
       where: { restaurant_uuid },
       select: ["restaurant_review_rating"],
@@ -208,12 +213,9 @@ export class RestaurantService {
     const restaurant = await this.restaurantRepository.findOne({
       where: { restaurant_uuid },
     });
-    restaurant.restaurant_rating = (rating ? rating : 0) / (total ? total : 1);
+    restaurant.restaurant_rating = rating / total;
     await this.restaurantRepository.save(restaurant);
-    return this.restaurantReviewRepository.delete({
-      user_uuid,
-      restaurant_uuid,
-    });
+    return;
   }
 
   async getRestaurantLike(restaurant_uuid: string): Promise<number> {

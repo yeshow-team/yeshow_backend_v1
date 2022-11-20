@@ -128,7 +128,7 @@ export class RestaurantService {
     const reviews = await this.restaurantReviewRepository.find({
       where: { restaurant_uuid },
     });
-    const reviewResult = [];
+    let reviewResult = [];
     for (const review of reviews) {
       const user = await this.userService.fetchUser(review.user_uuid);
       reviewResult.push({

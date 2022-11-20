@@ -159,9 +159,8 @@ export class RestaurantService {
     const restaurant = await this.restaurantRepository.findOne({
       where: { restaurant_uuid: restaurantReview.restaurant_uuid },
     });
-    console.log(total);
-    restaurant.restaurant_rating =
-      (typeof rating === "number" ? rating : 0) / total;
+    restaurant.restaurant_rating = rating / total;
+    if (restaurant.restaurant_rating === NaN) restaurant.restaurant_rating = 0;
     await this.restaurantRepository.save(restaurant);
     return this.restaurantReviewRepository.save({
       ...restaurantReview,
@@ -186,6 +185,7 @@ export class RestaurantService {
       where: { restaurant_uuid: restaurantReview.restaurant_uuid },
     });
     restaurant.restaurant_rating = rating / total;
+    if (restaurant.restaurant_rating === NaN) restaurant.restaurant_rating = 0;
     await this.restaurantRepository.save(restaurant);
     return this.restaurantReviewRepository.save({
       ...restaurantReview,
@@ -210,6 +210,7 @@ export class RestaurantService {
       where: { restaurant_uuid },
     });
     restaurant.restaurant_rating = rating / total;
+    if (restaurant.restaurant_rating === NaN) restaurant.restaurant_rating = 0;
     await this.restaurantRepository.save(restaurant);
     return this.restaurantReviewRepository.delete({
       user_uuid,

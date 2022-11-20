@@ -11,7 +11,6 @@ import {
   RestaurantLikeEntity,
 } from "./restaurant.entity";
 import { UserEntity } from "src/user/user.entity";
-import { UserService } from "src/user/user.service";
 
 @Injectable()
 export class RestaurantService {
@@ -27,7 +26,7 @@ export class RestaurantService {
     @InjectRepository(RestaurantLikeEntity)
     private readonly restaurantLikeRepository: Repository<RestaurantLikeEntity>,
     @InjectRepository(UserEntity)
-    private readonly userService: UserService,
+    private readonly userRepository: Repository<UserEntity>,
     private jwtService: JwtService,
     private readonly config: ConfigService,
   ) {}
@@ -39,6 +38,10 @@ export class RestaurantService {
     return this.jwtService.verify(req.headers.authorization.split(" ")[1], {
       secret: this.config.get("ACCESS_TOKEN_SECRET"),
     }).user_uuid;
+  }
+
+  async getUserByUUID(user_uuid: string): Promise<UserEntity> {
+    return this.userRepository.findOne({ where: { user_uuid } });
   }
 
   async findAll(): Promise<any> {
@@ -130,7 +133,7 @@ export class RestaurantService {
     });
     const reviewResult = [];
     for (const review of reviews) {
-      const user = await this.userService.getUserByUUID(review.user_uuid);
+      const user = await this.getUserByUUID(review.user_uuid);
       reviewResult.push({
         ...review,
         ...user,

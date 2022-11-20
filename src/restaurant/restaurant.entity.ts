@@ -120,7 +120,12 @@ export class RestaurantReviewEntity {
   @Column({ type: "text", nullable: false })
   restaurant_review_detail: string;
 
-  @Column({ default: 0, nullable: false })
+  @Column("decimal", {
+    default: 0,
+    nullable: false,
+    precision: 38,
+    scale: 0,
+  })
   restaurant_review_rating: number;
 
   @CreateDateColumn({ insert: false, update: false, select: false })

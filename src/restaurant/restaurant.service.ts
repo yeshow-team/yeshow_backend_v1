@@ -147,6 +147,10 @@ export class RestaurantService {
     user_uuid: string,
     restaurantReview: RestaurantReviewEntity,
   ): Promise<RestaurantReviewEntity> {
+    await this.restaurantReviewRepository.save({
+      ...restaurantReview,
+      user_uuid,
+    });
     // restaurants entity에 rating update
     const [result, total] = await this.restaurantReviewRepository.findAndCount({
       where: { restaurant_uuid: restaurantReview.restaurant_uuid },
@@ -160,12 +164,8 @@ export class RestaurantService {
       where: { restaurant_uuid: restaurantReview.restaurant_uuid },
     });
     restaurant.restaurant_rating = (rating ? rating : 0) / (total ? total : 1);
-    console.log(restaurant);
     await this.restaurantRepository.save(restaurant);
-    return this.restaurantReviewRepository.save({
-      ...restaurantReview,
-      user_uuid,
-    });
+    return;
   }
 
   async updateRestaurantReview(

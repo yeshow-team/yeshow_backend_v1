@@ -130,8 +130,10 @@ export class RestaurantService {
     });
     const reviewResult = [];
     for (const review of reviews) {
+      const user = await this.userService.getUserByUUID(review.user_uuid);
       reviewResult.push({
         ...review,
+        ...user,
         myReview: review.user_uuid === user_uuid,
       });
     }

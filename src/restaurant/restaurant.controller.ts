@@ -112,13 +112,13 @@ export class RestaurantController {
   @Post("like")
   @UseGuards(AccessGuard)
   async createRestaurantLike(
-    @Body() restaurant_uuid: string,
+    @Body() body: any,
     @Req() req,
   ): Promise<RestaurantLikeEntity> {
-    console.log(restaurant_uuid);
+    console.log(body.restaurant_uuid);
     return this.restaurantService.createRestaurantLike(
       this.restaurantService.getUUIDFromReq(req),
-      restaurant_uuid,
+      body.restaurant_uuid,
     );
   }
 

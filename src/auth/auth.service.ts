@@ -23,7 +23,7 @@ export class AuthService {
 
   async createUser(userData: CreateUser): Promise<UserEntity> {
     if (await this.getUserById(userData.user_id)) {
-      throw new HttpException("User or Email already exists", 400);
+      throw new HttpException("User already exists", 400);
     }
     const newUser = await this.userRepository.create(userData);
     await this.userRepository.save(newUser);

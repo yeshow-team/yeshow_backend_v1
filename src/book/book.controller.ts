@@ -16,7 +16,7 @@ import { AdminGuard } from "src/auth/admin.guard";
 import { createBook } from "./book.interface";
 
 @Controller({
-  path: "user",
+  path: "book",
   version: "1",
 })
 export class BookController {

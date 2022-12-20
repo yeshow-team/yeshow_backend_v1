@@ -10,22 +10,22 @@ import {
   PrimaryColumn,
 } from "typeorm";
 
-@Entity("restaurants")
-export class RestaurantEntity {
+@Entity("shops")
+export class ShopEntity {
   @PrimaryGeneratedColumn("uuid")
-  restaurant_uuid: string;
+  shop_uuid: string;
 
   @Column({ length: 20, nullable: false })
-  restaurant_name: string;
+  shop_name: string;
 
   @Column({ type: "text" })
-  restaurant_image: string;
+  shop_image: string;
 
   @Column({ length: 32, nullable: false })
-  restaurant_category: string;
+  shop_category: string;
 
   @Column({ default: 0, nullable: false })
-  restaurant_type: number;
+  shop_type: number;
 
   @Column("decimal", {
     default: 0,
@@ -33,97 +33,106 @@ export class RestaurantEntity {
     precision: 38,
     scale: 0,
   })
-  restaurant_rating: number;
+  shop_rating: number;
 
   @Column({ default: 0, nullable: false })
-  restaurant_like: number;
-
-  @CreateDateColumn({ insert: false, update: false, select: false })
-  restaurant_created_date: Date;
-
-  @UpdateDateColumn({ insert: false, select: false })
-  restaurant_updated_date: Date;
-
-  @DeleteDateColumn({ insert: false, select: false })
-  restaurant_deleted_at: Date;
-}
-
-@Entity("restaurant_details")
-export class RestaurantDetailEntity {
-  @PrimaryColumn({ length: 36, nullable: false })
-  restaurant_uuid: string;
+  shop_like: number;
 
   @Column({ type: "text", nullable: false })
-  restaurant_description: string;
+  business_registration_image: string;
 
-  @Column({ length: 20, nullable: false })
-  restaurant_tell: string;
-
-  @Column({ length: 10, nullable: false })
-  restaurant_zip_code: string;
-
-  @Column({ length: 254, nullable: false })
-  restaurant_address: string;
+  @Column({ type: "text", nullable: false })
+  business_registration_certificate_image: string;
 
   @CreateDateColumn({ insert: false, update: false, select: false })
-  restaurant_detail_created_date: Date;
+  shop_created_date: Date;
 
   @UpdateDateColumn({ insert: false, select: false })
-  restaurant_detail_updated_date: Date;
+  shop_updated_date: Date;
 
   @DeleteDateColumn({ insert: false, select: false })
-  restaurant_detail_deleted_at: Date;
+  shop_deleted_at: Date;
 }
 
-@Entity("restaurant_menus")
-export class RestaurantMenuEntity {
+@Entity("shop_details")
+export class ShopDetailEntity {
+  @PrimaryColumn({ length: 36, nullable: false })
+  shop_uuid: string;
+
+  @Column({ type: "text", nullable: false })
+  shop_description: string;
+
+  @Column({ length: 20, nullable: false })
+  shop_tell: string;
+
+  @Column({ length: 254, nullable: false })
+  shop_address: string;
+
+  @Column({ length: 30, nullable: false })
+  shop_business_hours: string;
+
+  @Column({ length: 30, nullable: false })
+  shop_closed_days: string;
+
+  @CreateDateColumn({ insert: false, update: false, select: false })
+  shop_detail_created_date: Date;
+
+  @UpdateDateColumn({ insert: false, select: false })
+  shop_detail_updated_date: Date;
+
+  @DeleteDateColumn({ insert: false, select: false })
+  shop_detail_deleted_at: Date;
+}
+
+@Entity("shop_menus")
+export class ShopMenuEntity {
   @PrimaryGeneratedColumn("increment")
   menu_id: number;
 
   @Column({ length: 36, nullable: false })
-  restaurant_uuid: string;
+  shop_uuid: string;
 
   @Column({ type: "text", nullable: false })
-  restaurant_menu_name: string;
+  shop_menu_name: string;
 
   @Column({ type: "text", nullable: false })
-  restaurant_menu_description: string;
+  shop_menu_description: string;
 
   @Column({ nullable: false })
-  restaurant_menu_price: number;
+  shop_menu_price: number;
 
   @Column({ type: "text" })
-  restaurant_menu_image: string;
+  shop_menu_image: string;
 
   @Column({ default: 0, nullable: false })
-  restaurant_menu_type: number;
+  shop_menu_type: number;
 
   @CreateDateColumn({ insert: false, update: false, select: false })
-  restaurant_menu_created_date: Date;
+  shop_menu_created_date: Date;
 
   @UpdateDateColumn({ insert: false, select: false })
-  restaurant_menu_updated_date: Date;
+  shop_menu_updated_date: Date;
 
   @DeleteDateColumn({ insert: false, select: false })
-  restaurant_menu_deleted_at: Date;
+  shop_menu_deleted_at: Date;
 }
 
-@Entity("restaurant_reviews")
-export class RestaurantReviewEntity {
+@Entity("shop_reviews")
+export class ShopReviewEntity {
   @PrimaryGeneratedColumn("increment")
   review_id: number;
 
   @Column({ length: 36, nullable: false })
-  restaurant_uuid: string;
+  shop_uuid: string;
 
   @Column({ length: 36, nullable: false })
   user_uuid: string;
 
   @Column({ type: "text", nullable: false })
-  restaurant_review_title: string;
+  shop_review_title: string;
 
   @Column({ type: "text", nullable: false })
-  restaurant_review_detail: string;
+  shop_review_detail: string;
 
   @Column("decimal", {
     default: 0,
@@ -131,35 +140,35 @@ export class RestaurantReviewEntity {
     precision: 38,
     scale: 0,
   })
-  restaurant_review_rating: number;
+  shop_review_rating: number;
 
   @CreateDateColumn({ insert: false, update: false, select: false })
-  restaurant_review_created_date: Date;
+  shop_review_created_date: Date;
 
   @UpdateDateColumn({ insert: false })
-  restaurant_review_updated_date: Date;
+  shop_review_updated_date: Date;
 
   @DeleteDateColumn({ insert: false, select: false })
-  restaurant_review_deleted_at: Date;
+  shop_review_deleted_at: Date;
 }
 
-@Entity("restaurant_likes")
-export class RestaurantLikeEntity {
+@Entity("shop_likes")
+export class ShopLikeEntity {
   @PrimaryGeneratedColumn("increment")
   like_id: number;
 
   @Column({ length: 36, nullable: false })
-  restaurant_uuid: string;
+  shop_uuid: string;
 
   @Column({ length: 36, nullable: false })
   user_uuid: string;
 
   @CreateDateColumn({ insert: false, update: false, select: false })
-  restaurant_like_created_date: Date;
+  shop_like_created_date: Date;
 
   @UpdateDateColumn({ insert: false, select: false })
-  restaurant_like_updated_date: Date;
+  shop_like_updated_date: Date;
 
   @DeleteDateColumn({ insert: false, select: false })
-  restaurant_like_deleted_at: Date;
+  shop_like_deleted_at: Date;
 }

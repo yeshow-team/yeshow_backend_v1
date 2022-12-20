@@ -3,7 +3,7 @@ import { ConfigModule } from "@nestjs/config";
 import { DatabaseModule } from "./database.module";
 import { AuthModule } from "./auth/auth.module";
 import { UserModule } from "./user/user.module";
-import { RestaurantModule } from "./restaurant/restaurant.module";
+import { ShopModule } from "./shop/shop.module";
 import { BookModule } from "./book/book.module";
 
 @Module({
@@ -11,7 +11,7 @@ import { BookModule } from "./book/book.module";
     DatabaseModule,
     AuthModule,
     UserModule,
-    RestaurantModule,
+    ShopModule,
     BookModule,
     ConfigModule.forRoot({
       isGlobal: true,

@@ -14,8 +14,13 @@ export class UserService {
     private jwtService: JwtService,
     private readonly config: ConfigService,
   ) {}
-  getHello(): string {
-    return "Hello World!";
+  async getId(user_uuid: string): Promise<string> {
+    return (
+      await this.userRepository.findOne({
+        where: { user_uuid },
+        select: ["user_id"],
+      })
+    ).user_id;
   }
 
   getUUIDFromReq(req: any): string {

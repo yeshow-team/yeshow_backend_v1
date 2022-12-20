@@ -43,6 +43,21 @@ export class AuthController {
     return { refreshToken: refreshToken };
   }
 
+  @Post("login/admin")
+  @HttpCode(200)
+  @UseGuards(AuthGuard("local"))
+  async loginAdmin(@Req() req, @Res({ passthrough: true }) res) {
+    const { user } = req;
+    const refreshToken = await this.authService.getRefreshToken(user.user_id);
+    res.cookie("refreshToken", refreshToken, {
+      domain: this.config.get("SERVICE_DOMAIN"),
+      httpOnly: this.config.get("NODE_ENV") === "production",
+      secure: this.config.get("NODE_ENV") === "production",
+      maxAge: 60 * 60 * 24 * 7 * 1000,
+    });
+    return { success: true };
+  }
+
   @Get("google")
   @UseGuards(AuthGuard("google"))
   // eslint-disable-next-line @typescript-eslint/no-empty-function

@@ -21,7 +21,7 @@ export class ShopEntity {
   @Column({ length: 20, nullable: false })
   shop_name: string;
 
-  @Column({ type: "text" })
+  @Column({ type: "longtext" })
   shop_image: string;
 
   @Column({ length: 32, nullable: false })
@@ -41,10 +41,10 @@ export class ShopEntity {
   @Column({ default: 0, nullable: false })
   shop_like: number;
 
-  @Column({ type: "text", nullable: false })
+  @Column({ type: "longtext", nullable: false })
   business_registration_image: string;
 
-  @Column({ type: "text", nullable: false })
+  @Column({ type: "longtext", nullable: false })
   business_registration_certificate_image: string;
 
   @CreateDateColumn({ insert: false, update: false, select: false })
@@ -62,7 +62,7 @@ export class ShopDetailEntity {
   @PrimaryColumn({ length: 36, nullable: false })
   shop_uuid: string;
 
-  @Column({ type: "text", nullable: false })
+  @Column({ type: "longtext", nullable: false })
   shop_description: string;
 
   @Column({ length: 20, nullable: false })
@@ -95,16 +95,16 @@ export class ShopMenuEntity {
   @Column({ length: 36, nullable: false })
   shop_uuid: string;
 
-  @Column({ type: "text", nullable: false })
+  @Column({ type: "longtext", nullable: false })
   shop_menu_name: string;
 
-  @Column({ type: "text", nullable: false })
+  @Column({ type: "longtext", nullable: false })
   shop_menu_description: string;
 
   @Column({ nullable: false })
   shop_menu_price: number;
 
-  @Column({ type: "text" })
+  @Column({ type: "longtext" })
   shop_menu_image: string;
 
   @Column({ default: 0, nullable: false })
@@ -131,10 +131,10 @@ export class ShopReviewEntity {
   @Column({ length: 36, nullable: false })
   user_uuid: string;
 
-  @Column({ type: "text", nullable: false })
+  @Column({ type: "longtext", nullable: false })
   shop_review_title: string;
 
-  @Column({ type: "text", nullable: false })
+  @Column({ type: "longtext", nullable: false })
   shop_review_detail: string;
 
   @Column("decimal", {

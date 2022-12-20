@@ -68,7 +68,10 @@ export class ShopService {
   }
 
   async createShop(author_uuid: string, shop: IShop): Promise<ShopEntity> {
-    return this.shopRepository.save(shop);
+    return this.shopRepository.save({
+      ...shop,
+      author_uuid,
+    });
   }
 
   async getShop(shop_uuid: string): Promise<ShopEntity> {

@@ -23,7 +23,7 @@ async function bootstrap() {
   const config = app.get(ConfigService);
   app.use(cookieParser());
   app.enableCors({
-    origin: config.get<string>("CORS_ORIGIN"),
+    origin: "*",
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
     preflightContinue: false,

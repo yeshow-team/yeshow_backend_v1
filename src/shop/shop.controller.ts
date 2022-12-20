@@ -37,7 +37,7 @@ export class ShopController {
 
   @Get("myshop")
   @UseGuards(AdminGuard)
-  async findMyShops(): Promise<ShopEntity[]> {
+  async findMyShops(@Req() req): Promise<ShopEntity[]> {
     return this.shopService.findMyShops(this.shopService.getUUIDFromReq(req));
   }
 

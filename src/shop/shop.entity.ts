@@ -104,7 +104,7 @@ export class ShopMenuEntity {
   @Column({ nullable: false })
   shop_menu_price: number;
 
-  @Column({ type: "longtext" })
+  @Column({ type: "longtext", nullable: true })
   shop_menu_image: string;
 
   @Column({ default: 0, nullable: false })

@@ -5,7 +5,7 @@ import { JwtService } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
 import { UserEntity } from "src/user/user.entity";
 import { BookEntity } from "src/book/book.entity";
-import { RestaurantEntity } from "src/shop/shop.entity";
+import { ShopEntity } from "src/shop/shop.entity";
 
 @Injectable()
 export class AdminService {

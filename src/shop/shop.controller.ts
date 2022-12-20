@@ -35,6 +35,12 @@ export class ShopController {
     return this.shopService.findAll();
   }
 
+  @Get("myshop")
+  @UseGuards(AdminGuard)
+  async findMyShops(): Promise<ShopEntity[]> {
+    return this.shopService.findMyShops(this.shopService.getUUIDFromReq(req));
+  }
+
   @Post()
   @UseGuards(AdminGuard)
   async createShopAndMenus(
@@ -66,7 +72,7 @@ export class ShopController {
     const shop_detail = await this.shopService.getShopDetail(shop_uuid);
     const like = await this.shopService.getShopLike(shop_uuid);
     const menu = await this.shopService.getShopMenu(shop_uuid);
-    const review = await this.shopService.getShopReview(
+    const review = await this.shopService.getShopReviewByUser(
       shop_uuid,
       this.shopService.getUUIDFromReq(req),
     );
@@ -149,10 +155,16 @@ export class ShopController {
     @Req() req,
     @Param("shop_uuid") shop_uuid: string,
   ): Promise<any> {
-    return this.shopService.getShopReview(
+    return this.shopService.getShopReviewByUser(
       shop_uuid,
       this.shopService.getUUIDFromReq(req),
     );
+  }
+
+  @Get("review/all/:shop_uuid")
+  @UseGuards(AdminGuard)
+  async getShopReview(@Param("shop_uuid") shop_uuid: string) {
+    return this.shopService.getShopReview(shop_uuid);
   }
 
   @Post("review")

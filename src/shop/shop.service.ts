@@ -61,6 +61,12 @@ export class ShopService {
     return shops;
   }
 
+  async findMyShops(author_uuid: string): Promise<ShopEntity[]> {
+    return await this.shopRepository.find({
+      where: { author_uuid },
+    });
+  }
+
   async createShop(author_uuid: string, shop: IShop): Promise<ShopEntity> {
     return this.shopRepository.save(shop);
   }
@@ -140,7 +146,10 @@ export class ShopService {
     return;
   }
 
-  async getShopReview(shop_uuid: string, user_uuid: string): Promise<any> {
+  async getShopReviewByUser(
+    shop_uuid: string,
+    user_uuid: string,
+  ): Promise<any> {
     const reviews = await this.shopReviewRepository.find({
       where: { shop_uuid },
     });
@@ -154,6 +163,13 @@ export class ShopService {
       });
     }
     return reviewResult;
+  }
+
+  async getShopReview(shop_uuid: string): Promise<any> {
+    return await this.shopReviewRepository.find({
+      where: { shop_uuid },
+      order: { shop_review_created_date: "DESC" },
+    });
   }
 
   async createShopReview(

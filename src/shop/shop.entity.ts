@@ -47,7 +47,7 @@ export class ShopEntity {
   @Column({ type: "longtext", nullable: false })
   business_registration_certificate_image: string;
 
-  @CreateDateColumn({ insert: false, update: false, select: false })
+  @CreateDateColumn({ insert: false, update: false })
   shop_created_date: Date;
 
   @UpdateDateColumn({ insert: false, select: false })
@@ -110,7 +110,7 @@ export class ShopMenuEntity {
   @Column({ default: 0, nullable: false })
   shop_menu_type: number;
 
-  @CreateDateColumn({ insert: false, update: false })
+  @CreateDateColumn({ insert: false, update: false, select: false })
   shop_menu_created_date: Date;
 
   @UpdateDateColumn({ insert: false, select: false })

@@ -54,7 +54,6 @@ export class AuthController {
       httpOnly: this.config.get("NODE_ENV") === "production",
       secure: this.config.get("NODE_ENV") === "production",
       maxAge: 60 * 60 * 24 * 7 * 1000,
-      SameSite: "None",
     });
     return { success: true };
   }

@@ -61,7 +61,7 @@ export class ShopService {
     return shops;
   }
 
-  async createShop(shop: IShop): Promise<ShopEntity> {
+  async createShop(author_uuid: string, shop: IShop): Promise<ShopEntity> {
     return this.shopRepository.save(shop);
   }
 
@@ -83,9 +83,12 @@ export class ShopService {
     return this.shopRepository.delete({ shop_uuid });
   }
 
-  async createShopAndMenus(shopData: IShopAndMenus): Promise<void> {
+  async createShopAndMenus(
+    author_uuid: string,
+    shopData: IShopAndMenus,
+  ): Promise<void> {
     const { shop, shop_detail, menus } = shopData;
-    const shop_uuid = (await this.createShop(shop)).shop_uuid;
+    const shop_uuid = (await this.createShop(author_uuid, shop)).shop_uuid;
     shop_detail.shop_uuid = shop_uuid;
     await this.createShopDetail({ ...shop_detail, shop_uuid });
     await this.createShopMenus(menus, shop_uuid);

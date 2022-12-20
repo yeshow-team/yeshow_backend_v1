@@ -37,14 +37,23 @@ export class ShopController {
 
   @Post()
   @UseGuards(AdminGuard)
-  async createShopAndMenus(@Body() shopData: IShopAndMenus): Promise<void> {
-    return this.shopService.createShopAndMenus(shopData);
+  async createShopAndMenus(
+    @Req() req,
+    @Body() shopData: IShopAndMenus,
+  ): Promise<void> {
+    return this.shopService.createShopAndMenus(
+      this.shopService.getUUIDFromReq(req),
+      shopData,
+    );
   }
 
   @Post("create")
   @UseGuards(AdminGuard)
-  async createShop(@Body() shop: IShop): Promise<ShopEntity> {
-    return this.shopService.createShop(shop);
+  async createShop(@Req() req, @Body() shop: IShop): Promise<ShopEntity> {
+    return this.shopService.createShop(
+      this.shopService.getUUIDFromReq(req),
+      shop,
+    );
   }
 
   @Get(":shop_uuid")

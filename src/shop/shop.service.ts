@@ -89,6 +89,7 @@ export class ShopService {
     shop_detail.shop_uuid = shop_uuid;
     await this.createShopDetail({ ...shop_detail, shop_uuid });
     await this.createShopMenus(menus, shop_uuid);
+    return;
   }
 
   async getShopDetail(shop_uuid: string): Promise<object> {

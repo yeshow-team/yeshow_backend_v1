@@ -41,6 +41,9 @@ export class UserEntity {
   @Column({ default: 0, nullable: false, insert: false })
   user_role: number;
 
+  @Column({ type: "longtext", nullable: true })
+  user_profile_image: string;
+
   @Column({ length: 200, nullable: true, select: false })
   user_refresh_token: string;
 

@@ -28,6 +28,7 @@ async function bootstrap() {
     credentials: true,
     preflightContinue: false,
     optionsSuccessStatus: 204,
+    allowedHeaders: "Content-Type, Authorization, Accept",
   });
 
   if (config.get<string>("NODE_ENV") === "development") {

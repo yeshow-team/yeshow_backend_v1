@@ -50,6 +50,7 @@ export class AuthController {
     const { user } = req;
     const refreshToken = await this.authService.getRefreshToken(user.user_id);
     res.cookie("refreshToken", refreshToken, {
+      domain: this.config.get("SERVICE_DOMAIN"),
       httpOnly: this.config.get("NODE_ENV") === "production",
       secure: this.config.get("NODE_ENV") === "production",
       maxAge: 60 * 60 * 24 * 7 * 1000,

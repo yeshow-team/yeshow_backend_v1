@@ -110,7 +110,7 @@ export class ShopMenuEntity {
   @Column({ default: 0, nullable: false })
   shop_menu_type: number;
 
-  @CreateDateColumn({ insert: false, update: false, select: false })
+  @CreateDateColumn({ insert: false, update: false })
   shop_menu_created_date: Date;
 
   @UpdateDateColumn({ insert: false, select: false })

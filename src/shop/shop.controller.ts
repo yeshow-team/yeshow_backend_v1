@@ -167,6 +167,14 @@ export class ShopController {
     return this.shopService.getShopReview(shop_uuid);
   }
 
+  @Get("review/count/:shop_uuid")
+  @UseGuards(AccessGuard)
+  async getShopReviewCount(
+    @Param("shop_uuid") shop_uuid: string,
+  ): Promise<number> {
+    return this.shopService.getShopReviewCount(shop_uuid);
+  }
+
   @Post("review")
   @UseGuards(AccessGuard)
   async createReview(

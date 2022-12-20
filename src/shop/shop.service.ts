@@ -175,6 +175,13 @@ export class ShopService {
     });
   }
 
+  async getShopReviewCount(shop_uuid: string): Promise<number> {
+    const [result, total] = await this.shopReviewRepository.findAndCount({
+      where: { shop_uuid },
+    });
+    return total;
+  }
+
   async createShopReview(
     user_uuid: string,
     shopReview: ShopReviewEntity,

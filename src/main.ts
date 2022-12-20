@@ -4,7 +4,7 @@ import { NestFactory } from "@nestjs/core";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import cookieParser from "cookie-parser";
 import { AppModule } from "./app.module";
-import cookieSession from "cookie-session";
+import { urlencoded, json } from "body-parser";
 
 async function swagger(app: INestApplication) {
   const config = new DocumentBuilder()
@@ -23,13 +23,6 @@ async function bootstrap() {
 
   const config = app.get(ConfigService);
   app.use(cookieParser());
-  app.use(
-    cookieSession({
-      name: "__session",
-      keys: [config.get<string>("REFRESH_TOKEN_SECRET")],
-      sameSite: "none",
-    }),
-  );
   app.enableCors({
     origin: config.get<string>("FRONTEND_URL"),
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
@@ -38,6 +31,8 @@ async function bootstrap() {
     optionsSuccessStatus: 204,
     allowedHeaders: "Content-Type, Authorization, Accept",
   });
+  app.use(json({ limit: "100mb" }));
+  app.use(urlencoded({ limit: "100mb", extended: true }));
 
   if (config.get<string>("NODE_ENV") === "development") {
     await swagger(app);

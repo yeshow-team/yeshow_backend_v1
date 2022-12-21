@@ -57,7 +57,11 @@ export class ShopService {
         ratingSum += parseInt(i.shop_review_rating);
       }
       const rating = ratingSum / reviewCount;
-      shops[i].shop_rating = rating;
+      if (isNaN(rating)) {
+        shops[i].shop_rating = 0;
+      } else {
+        shops[i].shop_rating = rating;
+      }
       i += 1;
     }
     console.log(shops[1].shop_rating);

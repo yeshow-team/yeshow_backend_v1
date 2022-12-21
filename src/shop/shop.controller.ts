@@ -87,8 +87,8 @@ export class ShopController {
 
   @Patch()
   @UseGuards(AdminGuard)
-  async updateShop(@Body() shop: IShop): Promise<ShopEntity> {
-    return this.shopService.updateShop(shop);
+  async updateShop(@Body() shop: IShopAndMenus): Promise<void> {
+    return this.shopService.updateShopAndMenus(shop);
   }
 
   @Delete()

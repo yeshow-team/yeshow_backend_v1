@@ -80,8 +80,9 @@ export class ShopService {
     });
   }
 
-  async updateShop(shop: IShop): Promise<ShopEntity> {
-    return this.shopRepository.save(shop);
+  async updateShop(shop: IShop, shop_uuid: string): Promise<void> {
+    this.shopRepository.update(shop_uuid, shop);
+    return;
   }
 
   async deleteShop(shop_uuid: string): Promise<any> {
@@ -101,6 +102,16 @@ export class ShopService {
     shop_detail.shop_uuid = shop_uuid;
     await this.createShopDetail({ ...shop_detail, shop_uuid });
     await this.createShopMenus(menus, shop_uuid);
+    return;
+  }
+
+  async updateShopAndMenus(shopData: IShopAndMenus): Promise<void> {
+    const { shop, shop_detail, menus } = shopData;
+    const shop_uuid = shop.shop_uuid;
+    delete shop.shop_uuid;
+    await this.updateShop(shop, shop_uuid);
+    await this.updateShopDetail(shop_detail, shop_uuid);
+    await this.updateShopMenus(menus);
     return;
   }
 
@@ -125,8 +136,12 @@ export class ShopService {
     return this.shopDetailRepository.save(shopDetail);
   }
 
-  async updateShopDetail(shopDetail: IShopDetail): Promise<ShopDetailEntity> {
-    return this.shopDetailRepository.save(shopDetail);
+  async updateShopDetail(
+    shopDetail: IShopDetail,
+    shop_uuid: string,
+  ): Promise<void> {
+    this.shopDetailRepository.update(shop_uuid, shopDetail);
+    return;
   }
 
   async getShopMenu(shop_uuid: string): Promise<ShopMenuEntity[]> {
@@ -145,6 +160,17 @@ export class ShopService {
         ...shopMenu,
         shop_uuid,
       });
+    });
+    return;
+  }
+
+  async updateShopMenu(shopMenu: IMenu): Promise<ShopMenuEntity> {
+    return this.shopMenuRepository.save(shopMenu);
+  }
+
+  async updateShopMenus(shopMenus: IMenu[]): Promise<void> {
+    shopMenus.forEach(async (shopMenu) => {
+      await this.shopMenuRepository.update(shopMenu.menu_id, shopMenu);
     });
     return;
   }

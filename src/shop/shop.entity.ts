@@ -15,7 +15,7 @@ export class ShopEntity {
   @PrimaryGeneratedColumn("uuid")
   shop_uuid: string;
 
-  @Column({ length: 36, nullable: false })
+  @Column({ length: 36, nullable: false, update: false })
   author_uuid: string;
 
   @Column({ length: 20, nullable: false })

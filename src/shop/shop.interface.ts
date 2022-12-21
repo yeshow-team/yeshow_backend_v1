@@ -7,6 +7,7 @@ export interface IShop {
   shop_type?: number;
   shop_rating?: number;
   shop_like?: number;
+  shop_uuid?: string;
 }
 
 export interface IShopDetail {
@@ -19,6 +20,7 @@ export interface IShopDetail {
 }
 
 export interface IMenu {
+  menu_id?: number;
   shop_uuid?: string;
   shop_menu_name: string;
   shop_menu_description: string;

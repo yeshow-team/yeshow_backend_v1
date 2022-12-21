@@ -170,6 +170,10 @@ export class ShopService {
 
   async updateShopMenus(shopMenus: IMenu[]): Promise<void> {
     shopMenus.forEach(async (shopMenu) => {
+      if (!shopMenu.menu_id) {
+        await this.shopMenuRepository.save(shopMenu);
+        return;
+      }
       await this.shopMenuRepository.update(shopMenu.menu_id, shopMenu);
     });
     return;

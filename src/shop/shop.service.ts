@@ -47,17 +47,17 @@ export class ShopService {
 
   async findAll(): Promise<any> {
     const shops = await this.shopRepository.find();
-    shops.forEach(async (shop) => {
-      const [result, total] = await this.shopReviewRepository.findAndCount({
-        where: { shop_uuid: shop.shop_uuid },
-        select: ["shop_review_rating"],
-      });
-      const rating = (await result).reduce(
-        (acc, cur) => acc + cur.shop_review_rating,
-        0,
-      );
-      shop.shop_rating = rating / total;
-    });
+    for await (let i = 0; i < shops.length; i++) {
+      shops[i].shop_rating = 0;
+      const shopReview = await this.getShopReview(shops[i].shop_uuid);
+      const reviewCount = await this.getShopReviewCount(shops[i].shop_uuid);
+      let ratingSum = 0;
+      for await (const i of shopReview) {
+        ratingSum += i.shop_review_rating;
+      }
+      const rating = ratingSum / reviewCount;
+      shops[i].shop_rating = rating;
+    }
     return shops;
   }
 

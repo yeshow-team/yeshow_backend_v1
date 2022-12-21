@@ -82,7 +82,9 @@ export class ShopController {
     for await (const i of shopReview) {
       ratingSum += i.rating;
     }
-    shop.shop_rating = 4.5;
+    const rating = ratingSum / reviewCount;
+    shop.shop_rating = rating;
+    console.log(rating);
     return {
       shop,
       shop_detail,

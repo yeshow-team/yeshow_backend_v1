@@ -19,7 +19,7 @@ export class BookEntity {
   user_uuid: string;
 
   @Column({ length: 36, nullable: false })
-  restaurant_uuid: string;
+  shop_uuid: string;
 
   @Column({ nullable: false })
   book_date: Date;

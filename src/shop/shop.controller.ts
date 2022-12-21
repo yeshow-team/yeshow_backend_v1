@@ -84,9 +84,9 @@ export class ShopController {
     }
     const rating = ratingSum / reviewCount;
     if (isNaN(rating)) {
-      shops[i].shop_rating = 0;
+      shop.shop_rating = 0;
     } else {
-      shops[i].shop_rating = rating;
+      shop.shop_rating = rating;
     }
     return {
       shop,

@@ -54,11 +54,10 @@ export class ShopService {
       const reviewCount = await this.getShopReviewCount(shops[i].shop_uuid);
       let ratingSum = 0;
       for await (const i of shopReview) {
-        ratingSum += i.shop_review_rating;
+        ratingSum += parseInt(i.shop_review_rating);
       }
-      console.log(ratingSum)
       const rating = ratingSum / reviewCount;
-      shops[i].shop_rating = 4.3;
+      shops[i].shop_rating = rating;
       i += 1;
     }
     console.log(shops[1].shop_rating);

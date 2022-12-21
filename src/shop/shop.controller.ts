@@ -79,7 +79,7 @@ export class ShopController {
     const shopReview = await this.shopService.getShopReview(shop_uuid);
     const reviewCount = await this.shopService.getShopReviewCount(shop_uuid);
     let ratingSum = 0;
-    for (const i of shopReview) {
+    for await (const i of shopReview) {
       ratingSum += i.rating;
     }
     shop.shop_rating = ratingSum / reviewCount;

@@ -50,4 +50,9 @@ export class BookService {
     });
     return this.getBook(user_uuid, bookCreate.book_id);
   }
+
+  async deleteBook(book_id: number): Promise<void> {
+    await this.bookRepository.delete({ book_id });
+    return;
+  }
 }

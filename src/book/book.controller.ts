@@ -14,6 +14,7 @@ import { BookEntity, BookMenuEntity } from "./book.entity";
 import { AccessGuard } from "src/auth/access.guard";
 import { AdminGuard } from "src/auth/admin.guard";
 import { createBook } from "./book.interface";
+import { Delete } from "@nestjs/common/decorators";
 
 @Controller({
   path: "book",
@@ -47,5 +48,11 @@ export class BookController {
       this.bookService.getUUIDFromReq(req),
       book,
     );
+  }
+
+  @Delete()
+  @UseGuards(AdminGuard)
+  async deleteBook(@Body() body): Promise<void> {
+    return this.bookService.deleteBook(body.book_id);
   }
 }

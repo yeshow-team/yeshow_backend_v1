@@ -30,12 +30,7 @@ export class ShopEntity {
   @Column({ default: 0, nullable: false })
   shop_type: number;
 
-  @Column("decimal", {
-    default: 0,
-    nullable: false,
-    precision: 38,
-    scale: 0,
-  })
+  @Column({ type: "float" })
   shop_rating: number;
 
   @Column({ default: 0, nullable: false })

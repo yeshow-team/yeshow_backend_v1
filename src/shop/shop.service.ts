@@ -111,7 +111,7 @@ export class ShopService {
     delete shop.shop_uuid;
     await this.updateShop(shop, shop_uuid);
     await this.updateShopDetail(shop_detail, shop_uuid);
-    await this.updateShopMenus(menus);
+    await this.updateShopMenus(menus, shop_uuid);
     return;
   }
 
@@ -168,9 +168,10 @@ export class ShopService {
     return this.shopMenuRepository.save(shopMenu);
   }
 
-  async updateShopMenus(shopMenus: IMenu[]): Promise<void> {
+  async updateShopMenus(shopMenus: IMenu[], shop_uuid: string): Promise<void> {
     shopMenus.forEach(async (shopMenu) => {
       if (!shopMenu.menu_id) {
+        shopMenu.shop_uuid = shop_uuid;
         await this.shopMenuRepository.save(shopMenu);
         return;
       }

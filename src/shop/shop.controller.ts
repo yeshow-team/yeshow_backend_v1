@@ -83,7 +83,7 @@ export class ShopController {
       ratingSum += i.shop_review_rating;
     }
     const rating = ratingSum / reviewCount;
-    shop.shop_rating = rating;
+    shop.shop_rating = 4.3;
     return {
       shop,
       shop_detail,

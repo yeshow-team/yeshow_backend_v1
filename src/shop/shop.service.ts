@@ -57,7 +57,7 @@ export class ShopService {
         ratingSum += i.shop_review_rating;
       }
       const rating = ratingSum / reviewCount;
-      shops[i].shop_rating = rating;
+      shops[i].shop_rating = 4.3;
       i += 1;
     }
     console.log(shops[1].shop_rating);

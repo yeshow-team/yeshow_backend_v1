@@ -60,6 +60,7 @@ export class ShopService {
       shops[i].shop_rating = rating;
       i += 1;
     }
+    console.log(shops[1].shop_rating);
     return shops;
   }
 

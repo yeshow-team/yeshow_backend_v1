@@ -55,6 +55,7 @@ export class ShopService {
       let ratingSum = 0;
       for await (const i of shopReview) {
         ratingSum += i.shop_review_rating;
+        console.log(i.shop_review_rating)
       }
       const rating = ratingSum / reviewCount;
       shops[i].shop_rating = 4.3;

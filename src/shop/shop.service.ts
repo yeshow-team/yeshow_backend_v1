@@ -180,6 +180,11 @@ export class ShopService {
     return;
   }
 
+  async deleteShopMenu(menu_id: number): Promise<void> {
+    await this.shopMenuRepository.delete({ menu_id });
+    return;
+  }
+
   async getShopReviewByUser(
     shop_uuid: string,
     user_uuid: string,

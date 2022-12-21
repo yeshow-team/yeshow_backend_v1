@@ -149,6 +149,18 @@ export class ShopController {
     return this.shopService.createShopMenu(shopMenu);
   }
 
+  @Patch("menu")
+  @UseGuards(AdminGuard)
+  async updateMenu(@Body() shopMenu: IMenu): Promise<ShopMenuEntity> {
+    return this.shopService.updateShopMenu(shopMenu);
+  }
+
+  @Delete("menu")
+  @UseGuards(AdminGuard)
+  async deleteMenu(@Body() body: { menu_id: number }): Promise<void> {
+    return this.shopService.deleteShopMenu(body.menu_id);
+  }
+
   @Get("review/:shop_uuid")
   @UseGuards(AccessGuard)
   async fetchReview(

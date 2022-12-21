@@ -47,16 +47,16 @@ export class ShopService {
 
   async findAll(): Promise<any> {
     const shops = await this.shopRepository.find();
-    for await (let i = 0; i < shops.length; i++) {
-      shops[i].shop_rating = 0;
-      const shopReview = await this.getShopReview(shops[i].shop_uuid);
-      const reviewCount = await this.getShopReviewCount(shops[i].shop_uuid);
+    for await (const shop of shops) {
+      shop.shop_rating = 0;
+      const shopReview = await this.getShopReview(shop.shop_uuid);
+      const reviewCount = await this.getShopReviewCount(shop.shop_uuid);
       let ratingSum = 0;
       for await (const i of shopReview) {
         ratingSum += i.shop_review_rating;
       }
       const rating = ratingSum / reviewCount;
-      shops[i].shop_rating = rating;
+      shop.shop_rating = rating;
     }
     return shops;
   }

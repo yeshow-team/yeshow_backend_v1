@@ -1,7 +1,7 @@
 import { INestApplication, Logger, VersioningType } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
-import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
+import { SwaggerModule, DocumentBuilder } from "@nestjs/swagger";
 import cookieParser from "cookie-parser";
 import { AppModule } from "./app.module";
 import { urlencoded, json } from "body-parser";
@@ -48,5 +48,14 @@ async function bootstrap() {
     `Server running on http://localhost:${config.get<number>("PORT")}`,
     "Bootstrap",
   );
+  const configSweger = new DocumentBuilder()
+    .setTitle('Cats example')
+    .setDescription('The cats API description')
+    .setVersion('1.0')
+    .addTag('cats')
+    .build();
+  const document = SwaggerModule.createDocument(app, configSweger);
+  SwaggerModule.setup('api', app, document);
+
 }
 bootstrap();

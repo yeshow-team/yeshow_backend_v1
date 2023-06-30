@@ -7,7 +7,6 @@ import { AuthController } from "./auth.controller";
 import { AuthService } from "./auth.service";
 import { UserEntity } from "src/user/user.entity";
 import { LocalStrategy } from "./local.strategy";
-import { GoogleStrategy } from "./google.strategy";
 import { JWTStrategy } from "./jwt.strategy";
 import { RefreshStrategy } from "./refresh.strategy";
 import { AccessStrategy } from "./access.strategy";
@@ -20,7 +19,6 @@ import { AdminStrategy } from "./admin.strategy";
   providers: [
     AuthService,
     LocalStrategy,
-    GoogleStrategy,
     JWTStrategy,
     RefreshStrategy,
     ConfigService,

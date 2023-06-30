@@ -19,7 +19,9 @@ import { UpdateUser } from "./user.interface";
   version: "1",
 })
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) {
+
+  }
 
   @Get()
   @UseGuards(AccessGuard)

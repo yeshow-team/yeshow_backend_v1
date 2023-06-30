@@ -78,7 +78,7 @@ export class AuthController {
   @Get("logout")
   @UseGuards(AuthGuard("jwt-refresh-token"))
   async logout(@Req() req) {
-    this.authService.deleteRefreshToken(req.cookies.refreshToken);
+    await this.authService.deleteRefreshToken(req.cookies.refreshToken);
     return;
   }
 
